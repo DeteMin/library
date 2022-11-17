@@ -1,4 +1,4 @@
-module gitlab.hddata.cn/common/go/library
+module gitlab.hddata.cn/common/library
 
 go 1.19
 
