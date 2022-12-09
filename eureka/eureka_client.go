@@ -191,56 +191,27 @@ func New(serviceName string, zone string, opts ...Option) Client {
 		eurekaCli: eurekaClient,
 		log:       options.logFunc,
 	}
-	go cli.keepAlive(options.keepAliveDuration)
 	return &cli
-}
-
-func (cli *discoveryClient) keepAlive(duration time.Duration) {
-	for {
-		api, err := cli.eurekaCli.Api()
-		if err != nil {
-			cli.log(eureka.LevelError, "%v", err)
-			time.Sleep(duration)
-			continue
-		}
-
-		instance := cli.eurekaCli.GetInstance()
-		vo, err := api.QuerySpecificAppInstance(instance.InstanceId)
-		if vo == nil || err != nil {
-			cli.log(eureka.LevelError, "%v", err)
-			if err := cli.Register(); err != nil {
-				cli.log(eureka.LevelError, "%v", err)
-			}
-			time.Sleep(duration)
-			continue
-		}
-		if vo.Status != eureka.STATUS_UP {
-			if err := api.UpdateInstanceStatus(instance.App, instance.InstanceId, eureka.STATUS_UP); err != nil {
-				cli.log(eureka.LevelError, "%v", err)
-			}
-			time.Sleep(duration)
-			continue
-		}
-		time.Sleep(duration)
-	}
 }
 
 // Register 重新注册实例
 func (cli *discoveryClient) Register() error {
-	api, err := cli.eurekaCli.Api()
+	apis, err := cli.eurekaCli.Api()
 	if err != nil {
 		return err
 	}
 	instance := cli.eurekaCli.GetInstance()
-	instanceID, err := api.RegisterInstanceWithVo(instance)
-	if err != nil {
-		return err
-	}
-	instance.InstanceId = instanceID
-	cli.eurekaCli.RegisterVo(instance)
-	err = api.UpdateInstanceStatus(instance.App, instance.InstanceId, eureka.STATUS_UP)
-	if err != nil {
-		return err
+	for _, api := range apis {
+		instanceID, err := api.RegisterInstanceWithVo(instance)
+		if err != nil {
+			return err
+		}
+		instance.InstanceId = instanceID
+		cli.eurekaCli.RegisterVo(instance)
+		err = api.UpdateInstanceStatus(instance.App, instance.InstanceId, eureka.STATUS_UP)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
