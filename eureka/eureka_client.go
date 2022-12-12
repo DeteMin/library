@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/HikoQiu/go-eureka-client/eureka"
+	"github.com/DeteMin/go-eureka-client/eureka"
 )
 
 const defaultPort = 80

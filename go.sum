@@ -1,12 +1,11 @@
-github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212030601-56bec0537f55 h1:t9ylf6jLs4TlsPiQVvA3Uy4lJcgbiokFI8vi4dqRgA0=
-github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212030601-56bec0537f55/go.mod h1:F0CDb4jxTi329/Qw1T8JPKoIY6nQJmmpC2m3iYU/3+w=
+github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212034337-c32fd85431b0 h1:gHPdKuB+OdY3x88OPPsyFFKkPS3XW6OyfN+LP8B79xs=
+github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212034337-c32fd85431b0/go.mod h1:8stG/jcQI3/5HLp6IbKzTAJFZ/XKZgZcKZlkhSggChI=
 github.com/miekg/dns v1.0.15 h1:9+UupePBQCG6zf1q/bGmTO1vumoG13jsrbWOSX1W6Tw=
 github.com/miekg/dns v1.0.15/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
-golang.org/x/crypto v0.3.0 h1:a06MkbcxBrEFc0w0QIZWXrH/9cCX6KJyWbBOIwAn+7A=
-golang.org/x/crypto v0.3.0/go.mod h1:hebNnKkNXi2UzZN1eVRvBB7co0a+JxK6XbPiWVs/3J4=
+golang.org/x/crypto v0.0.0-20180820150726-614d502a4dac h1:7d7lG9fHOLdL6jZPtnV4LpI41SbohIJ1Atq7U991dMg=
+golang.org/x/crypto v0.0.0-20180820150726-614d502a4dac/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
+golang.org/x/net v0.0.0-20181011144130-49bb7cea24b1 h1:Y/KGZSOdz/2r0WJ9Mkmz6NJBusp0kiNx1Cn82lzJQ6w=
 golang.org/x/net v0.0.0-20181011144130-49bb7cea24b1/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
-golang.org/x/net v0.2.0 h1:sZfSu1wtKLGlWI4ZZayP0ck9Y73K1ynO6gqzTdBVdPU=
-golang.org/x/net v0.2.0/go.mod h1:KqCZLdyyvdV855qA2rE3GC2aiw5xGR5TEjj8smXukLY=
 golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=
 golang.org/x/sys v0.3.0 h1:w8ZOecv6NaNa/zC8944JTU3vz4u6Lagfk4RPQxv92NQ=
 golang.org/x/sys v0.3.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
