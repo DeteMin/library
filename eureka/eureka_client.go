@@ -117,15 +117,6 @@ func WithKeepAliveDuration(keepAliveDuration time.Duration) Option {
 	})
 }
 
-// Client 整合客户端
-type Client interface {
-	Register() error
-}
-type discoveryClient struct {
-	eurekaCli *eureka.Client
-	log       LogFunc
-}
-
 // New 新建客户端
 /*
 	serviceName: 服务名，如：post-service
@@ -141,7 +132,7 @@ type discoveryClient struct {
 			eureka.WithLogFunc(func...)
 		);
 */
-func New(serviceName string, zone string, opts ...Option) Client {
+func New(serviceName string, zone string, opts ...Option) *eureka.Client {
 	options := options{
 		port:              defaultPort,
 		keepAliveDuration: time.Minute,
@@ -187,32 +178,5 @@ func New(serviceName string, zone string, opts ...Option) Client {
 
 	eurekaClient.Run()
 
-	cli := discoveryClient{
-		eurekaCli: eurekaClient,
-		log:       options.logFunc,
-	}
-	return &cli
-}
-
-// Register 重新注册实例
-func (cli *discoveryClient) Register() error {
-	apis, err := cli.eurekaCli.Api()
-	if err != nil {
-		return err
-	}
-	instance := cli.eurekaCli.GetInstance()
-	for _, api := range apis {
-		instanceID, err := api.RegisterInstanceWithVo(instance)
-		if err != nil {
-			return err
-		}
-		instance.InstanceId = instanceID
-		cli.eurekaCli.RegisterVo(instance)
-		err = api.UpdateInstanceStatus(instance.App, instance.InstanceId, eureka.STATUS_UP)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+	return eurekaClient
 }
