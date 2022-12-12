@@ -1,5 +1,5 @@
-github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221209094935-574b8cbefd0b h1:v0NDxxb/bkQOHW8Sl7nburb5xREIDu6J9H8j6UipCvw=
-github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221209094935-574b8cbefd0b/go.mod h1:F0CDb4jxTi329/Qw1T8JPKoIY6nQJmmpC2m3iYU/3+w=
+github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212030601-56bec0537f55 h1:t9ylf6jLs4TlsPiQVvA3Uy4lJcgbiokFI8vi4dqRgA0=
+github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212030601-56bec0537f55/go.mod h1:F0CDb4jxTi329/Qw1T8JPKoIY6nQJmmpC2m3iYU/3+w=
 github.com/miekg/dns v1.0.15 h1:9+UupePBQCG6zf1q/bGmTO1vumoG13jsrbWOSX1W6Tw=
 github.com/miekg/dns v1.0.15/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
 golang.org/x/crypto v0.3.0 h1:a06MkbcxBrEFc0w0QIZWXrH/9cCX6KJyWbBOIwAn+7A=
