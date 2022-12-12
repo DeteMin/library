@@ -3,7 +3,7 @@ module gitlab.hddata.cn/common/library
 go 1.19
 
 require (
-	github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212034337-c32fd85431b0
+	github.com/DeteMin/go-eureka-client/eureka v0.0.0-20221212062944-f87e79c5648d
 	gopkg.in/yaml.v2 v2.4.0
 )
 
