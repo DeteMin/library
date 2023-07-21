@@ -1,4 +1,4 @@
-module gitlab.hddata.cn/common/library
+module github.com/DeteMin/library
 
 go 1.19
 
