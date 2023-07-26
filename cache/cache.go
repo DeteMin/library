@@ -112,12 +112,17 @@ func setData(data, newData interface{}) (err error) {
 			err = errors.New("类型错误")
 		}
 	}()
-	newValue := reflect.ValueOf(data).Elem()
-	if !newValue.CanSet() {
-		err = errors.New("类型错误")
-		return
+	v := reflect.ValueOf(data)
+	if v.Len() == 0 {
+		data = newData
+	} else {
+		newValue := reflect.ValueOf(data).Elem()
+		if !newValue.CanSet() {
+			err = errors.New("类型错误")
+			return
+		}
+		newValue.Set(reflect.ValueOf(newData).Elem())
 	}
-	newValue.Set(reflect.ValueOf(newData).Elem())
 	return
 }
 
