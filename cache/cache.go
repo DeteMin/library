@@ -2,13 +2,13 @@ package cache
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"reflect"
 	"time"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/pkg/errors"
+	"github.com/vmihailenco/msgpack"
 )
 
 type Cache struct {
@@ -31,7 +31,7 @@ func (c *Cache) Put(ctx context.Context, data *CacheData) (err error) {
 	if data.Expire <= 0 {
 		return errors.New("未设置过期时间")
 	}
-	value, err := json.Marshal(data.Value)
+	value, err := msgpack.Marshal(data.Value)
 	if err != nil {
 		return
 	}
@@ -84,7 +84,7 @@ func (c *Cache) Get(ctx context.Context, key string, data interface{}, expire ti
 
 	err = c.Put(ctx, &CacheData{
 		Key:    key,
-		Value:  data,
+		Value:  newData,
 		Expire: expire,
 	})
 	return
@@ -99,7 +99,7 @@ func (c *Cache) get(ctx context.Context, key string, data interface{}) (ok bool,
 		err = errors.Wrap(err, "cache get key error")
 		return
 	}
-	if err = json.Unmarshal(value, data); err != nil {
+	if err = msgpack.Unmarshal(value, data); err != nil {
 		err = errors.Wrap(err, "cache get key unmarshal error")
 		return
 	}
@@ -112,17 +112,12 @@ func setData(data, newData interface{}) (err error) {
 			err = errors.New("类型错误")
 		}
 	}()
-	v := reflect.ValueOf(data)
-	if v.Len() == 0 {
-		data = newData
-	} else {
-		newValue := reflect.ValueOf(data).Elem()
-		if !newValue.CanSet() {
-			err = errors.New("类型错误")
-			return
-		}
-		newValue.Set(reflect.ValueOf(newData).Elem())
+	newValue := reflect.ValueOf(data).Elem()
+	if !newValue.CanSet() {
+		err = errors.New("类型错误")
+		return
 	}
+	newValue.Set(reflect.ValueOf(newData).Elem())
 	return
 }
 
