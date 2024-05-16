@@ -120,6 +120,7 @@ func WithKeepAliveDuration(keepAliveDuration time.Duration) Option {
 // Client 整合客户端
 type Client interface {
 	Register() error
+	GetApplicationByServerName(serverName string) *eureka.ApplicationVo
 }
 type discoveryClient struct {
 	eurekaCli *eureka.Client
@@ -184,7 +185,7 @@ func New(serviceName string, zone string, opts ...Option) Client {
 		vo.IppAddr = options.ip
 		eurekaClient = eurekaClient.RegisterVo(vo)
 	}
-
+	eurekaClient.GetRegistryApps()
 	eurekaClient.Run()
 
 	cli := discoveryClient{
@@ -254,4 +255,15 @@ func (cli *discoveryClient) Register() error {
 	}
 
 	return nil
+}
+
+// GetApplicationByServerName 从eureka中获取服务信息
+func (cli *discoveryClient) GetApplicationByServerName(serverName string) *eureka.ApplicationVo {
+	targetApp := eureka.ApplicationVo{}
+	appMap := cli.eurekaCli.GetRegistryApps()
+	if _, ok := appMap[serverName]; !ok {
+		return nil
+	}
+	targetApp = appMap[serverName]
+	return &targetApp
 }
