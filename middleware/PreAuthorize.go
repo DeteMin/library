@@ -18,8 +18,7 @@ func AuthCheck(permission string, redisCache *cache.Cache) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userId := c.GetHeader(constants.HEADER_USER_ID)
 		//根据userId去redis中获取用户的权限
-		key := constants.LOGIN_USER_KEY + ":" + userId
-		loginUser := &LoginUser{}
+		key := constants.LOGIN_TOKEN_KEY + ":" + userId
 		str, err := redisCache.Client.Get(context.Background(), key).Result()
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusOK, gin.H{
@@ -50,10 +49,10 @@ func AuthCheck(permission string, redisCache *cache.Cache) gin.HandlerFunc {
 			return
 		}
 
-		if contains(loginUser.Permissions, constants.ALL_PERMISSIONS) {
+		if contains(userInfo.Permissions, constants.ALL_PERMISSIONS) {
 			//有所有权限，放行
 			c.Next()
-		} else if contains(loginUser.Permissions, permission) {
+		} else if contains(userInfo.Permissions, permission) {
 			//有配置的权限，放行
 			c.Next()
 		} else {
