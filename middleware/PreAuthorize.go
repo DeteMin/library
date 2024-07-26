@@ -16,12 +16,12 @@ type LoginUser struct {
 
 func AuthCheck(permission string, redisCache *cache.Cache) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		userId := c.GetHeader(constants.HEADER_USER_ID)
+		userId := c.GetHeader(constants.HEADER_USER_KEY)
 		//根据userId去redis中获取用户的权限
 		key := constants.LOGIN_TOKEN_KEY + ":" + userId
 		str, err := redisCache.Client.Get(context.Background(), key).Result()
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusOK, gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"code": "40001",
 				"msg":  "用户Token已过期",
 			})
@@ -56,8 +56,8 @@ func AuthCheck(permission string, redisCache *cache.Cache) gin.HandlerFunc {
 			//有配置的权限，放行
 			c.Next()
 		} else {
-			c.AbortWithStatusJSON(http.StatusOK, gin.H{
-				"code": "40001",
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+				"code": "40003",
 				"msg":  "用户无对应权限",
 			})
 			return

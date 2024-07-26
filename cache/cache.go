@@ -15,7 +15,6 @@ type Cache struct {
 	Client *redis.Client
 }
 
-// NewCache NOTICE: 阿里云redis最大连接数为1w key命名规则: serviceName:modelName(只有model省略 model下子目录要保留):functionName:自定义参数
 func NewCache(option *redis.Options) *Cache {
 	return &Cache{Client: redis.NewClient(option)}
 }
